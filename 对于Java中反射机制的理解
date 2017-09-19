@@ -20,3 +20,25 @@
      
   要注意的是,第三种方法根据提供的全类名获取Class对象,可能会因为输入了错误的类名而抛出
 ClassNotFoundException异常,使用时需要捕获或者继续向上抛出异常.
+  
+  在完成了对于类的Class对象的获取后,就可以着手进行类分析和处理的工作了,这也是反射机制被引
+入到Java中最重要的作用.
+
+  在java.lang.reflect(反射)包中,包含着三个非常重要的工具类:Field(域),Method(方法),
+Constructo(构造器),分别用来描述目标类的域,方法,和构造方法,使用要分析的类的Class对象作为隐
+式参数调用相对的get方法会返回分别封装了该类的Field,Method,或Constroctor对象的数组.
+  
+  常用的get方法的命名构成格式为可以以如下方法记忆:
+               get+(Declared)+获取的目标信息类名+() //Declared用来标记获取私有变量或方法
+  
+  例:假如我们现在要获取String(字符串)类中包含的全部域(field)且要包含私有域的信息,根据上述
+格式,可以推断其方法命名应为:
+                    getDeclaredField();
+   应该用一个Field的数组进行接收
+                    Field[] stringField = String.class.getDeclaredField();
+                    //这里的String.class也可以替换成用另两种方式获取的Class对象
+   或者,要获取String类中包含的全部方法(method)且不含私有方法
+                    Method[] stringmethod = String.class.getMethod();
+  
+  查询API会发现该方法确实是如此命名的.得益于官方类库的良好的命名规范(方法名要用小驼峰),我们
+可以使用这种简单记法.
